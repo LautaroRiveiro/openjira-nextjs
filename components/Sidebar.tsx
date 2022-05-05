@@ -3,6 +3,7 @@ import InboxIcon from '@mui/icons-material/Inbox'
 import StarBorderIcon from '@mui/icons-material/StarBorder'
 import SendIcon from '@mui/icons-material/Send'
 import DraftsIcon from '@mui/icons-material/Drafts'
+import { useUIContext } from "../context/ui"
 
 const menuItems = [
   { title: 'Inbox', icon: <InboxIcon /> },
@@ -17,11 +18,13 @@ export const Sidebar = () => {
     console.log('Close...')
   }
 
+  const {isSideMenuOpened, toggleSideMenu} = useUIContext()
+
   return (
     <Drawer
       anchor="left"
-      open={true}
-      onClose={handleClose}
+      open={isSideMenuOpened}
+      onClose={toggleSideMenu}
     >
       <Box sx={{ padding: '5px 10px', width: 250 }}>
         <Typography variant="h5">Menú</Typography>
