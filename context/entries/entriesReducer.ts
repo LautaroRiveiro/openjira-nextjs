@@ -8,18 +8,24 @@ interface State {
 }
 
 enum ActionType {
-  INCREASE = 'INCREASE',
-  DECREASE = 'DECREASE',
+  ADD_ENTRY = 'ADD_ENTRY'
 }
 
 type Action =
-| { type: ActionType.INCREASE, payload: number }
-| { type: ActionType.DECREASE, payload: string }
+| { type: ActionType.ADD_ENTRY, payload: IEntry }
 
 
 // Funciones generadoras de acciones
-export const increment = (value: number) : Action => {
-  return {type: ActionType.INCREASE, payload: value}
+export const addEntry = (description: string) : Action => {
+
+  const newEntry : IEntry= {
+    _id: uuidv4(),
+    createdAt: Date.now(),
+    description,
+    status: 'pending'
+  }
+
+  return {type: ActionType.ADD_ENTRY, payload: newEntry}
 }
 
 // Estado inicial
@@ -47,10 +53,10 @@ const initialState : State = {
 // Reducer
 const reducer : Reducer<State, Action> = (state, action) => {
  switch (action.type) {
-   case ActionType.INCREASE:
+   case ActionType.ADD_ENTRY:
      return {
        ...state,
-       // ...
+       entries: [...state.entries, action.payload]
      }
  
    default:
@@ -59,3 +65,6 @@ const reducer : Reducer<State, Action> = (state, action) => {
 }
 
 export const useEntriesReducer = (_initState: State = initialState) => useReducer(reducer, _initState)
+export const entriesActions = {
+  addEntry
+}

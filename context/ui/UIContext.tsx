@@ -3,6 +3,8 @@ import { createContext, FC, PropsWithChildren, ReactElement, ReactNode, ReducerW
 type UIContextType = {
   isSideMenuOpened: boolean;
   toggleSideMenu: () => void;
+  isAddingEntry: boolean;
+  toggleAddingEntry: () => void;
 }
 
 const UIContext = createContext<UIContextType | undefined>(undefined)
@@ -10,10 +12,13 @@ const UIContext = createContext<UIContextType | undefined>(undefined)
 const UIContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [isSideMenuOpened, toggleSideMenu] = useReducer<ReducerWithoutAction<boolean>>(state => !state, false)
+  const [isAddingEntry, toggleAddingEntry] = useReducer<ReducerWithoutAction<boolean>>(state => !state, false)
 
   const value: UIContextType = {
     isSideMenuOpened,
-    toggleSideMenu
+    toggleSideMenu,
+    isAddingEntry,
+    toggleAddingEntry
   }
 
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>

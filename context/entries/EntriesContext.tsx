@@ -1,9 +1,10 @@
 import { createContext, FC, PropsWithChildren, ReactElement, useContext, useReducer, useState } from 'react'
 import { IEntry } from '../../interfaces';
-import { useEntriesReducer } from './entriesReducer'
+import { entriesActions, useEntriesReducer } from './entriesReducer'
 
 type ContextProps = {
   entries: IEntry[];
+  addEntry: (description: string) => void
 }
 
 const EntriesContext = createContext<ContextProps | undefined>(undefined)
@@ -12,9 +13,13 @@ const EntriesContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [state, dispatch] = useEntriesReducer()
 
-  
+  const addEntry = (description: string) => {
+    dispatch(entriesActions.addEntry(description))
+  }
+
   const value: ContextProps = {
-    ...state
+    ...state,
+    addEntry
   }
 
   return (
