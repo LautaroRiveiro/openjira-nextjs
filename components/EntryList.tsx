@@ -23,6 +23,7 @@ export const EntryList: FC<Props> = ({ status }) => {
           backgroundColor: 'transparent',
           padding: '3px 5px'
         }}
+        className='hidescroll'
       >
         <List sx={{ opacity: 1 }}>
           {
