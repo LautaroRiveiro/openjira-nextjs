@@ -9,11 +9,13 @@ interface State {
 enum ActionType {
   ADD_ENTRY = 'ADD_ENTRY',
   UPDATE_ENTRY = 'UPDATE_ENTRY',
+  INIT_ENTRIES = 'INIT_ENTRIES',
 }
 
 type Action =
 | { type: ActionType.ADD_ENTRY, payload: IEntry }
 | { type: ActionType.UPDATE_ENTRY, payload: {id: string, entry: Partial<IEntry>} }
+| { type: ActionType.INIT_ENTRIES, payload: IEntry[] }
 
 
 // Funciones generadoras de acciones
@@ -31,6 +33,10 @@ export const addEntry = (description: string) : Action => {
 
 export const updateEntry = (id: string, entry: Partial<IEntry>) : Action => {
   return {type: ActionType.UPDATE_ENTRY, payload: {id, entry}}
+}
+
+export const initEntries = (entries: IEntry[]) : Action => {
+  return {type: ActionType.INIT_ENTRIES, payload: entries}
 }
 
 // Estado inicial
@@ -65,6 +71,12 @@ const reducer : Reducer<State, Action> = (state, action) => {
        entries
      }
  
+   case ActionType.INIT_ENTRIES:
+    return {
+      ...state,
+      entries: [...action.payload]
+    }
+
    default:
      return state
  }
@@ -73,5 +85,6 @@ const reducer : Reducer<State, Action> = (state, action) => {
 export const useEntriesReducer = (_initState: State = initialState) => useReducer(reducer, _initState)
 export const entriesActions = {
   addEntry,
-  updateEntry
+  updateEntry,
+  initEntries
 }

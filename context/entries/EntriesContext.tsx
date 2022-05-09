@@ -1,5 +1,6 @@
-import { createContext, FC, PropsWithChildren, useContext } from 'react'
+import { createContext, FC, PropsWithChildren, useContext, useEffect } from 'react'
 import { EntryStatus, IEntry } from '../../interfaces'
+import { entriesApi } from '../../services'
 import { entriesActions, useEntriesReducer } from './entriesReducer'
 
 type ContextProps = {
@@ -13,6 +14,14 @@ const EntriesContext = createContext<ContextProps | undefined>(undefined)
 const EntriesContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [state, dispatch] = useEntriesReducer()
+
+  useEffect(() => {
+    const getEntries = async () => {
+      const entries = await entriesApi.getAll()
+      dispatch(entriesActions.initEntries(entries))
+    }
+    getEntries()
+  }, [dispatch])
 
   const addEntry = (description: string) => {
     dispatch(entriesActions.addEntry(description))
