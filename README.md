@@ -16,3 +16,4 @@ Proyecto basado en curso [Next.js: El framework de React para producción (Ferna
     `npm run dev`
   - MongoDB URL local:
     `mongodb://localhost:27017/entriesdb`
+- **Cargar datos en bbdd para prueba:** Llamar a `http://localhost:3000/api/seed`

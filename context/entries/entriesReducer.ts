@@ -36,24 +36,7 @@ export const updateEntry = (id: string, entry: Partial<IEntry>) : Action => {
 
 // Estado inicial
 const initialState : State = {
-  entries: [{
-    _id: uuidv4(),
-    createdAt: Date.now(),
-    description: 'pending: Terminar el curso de React Native',
-    status: "pending"
-  },
-  {
-    _id: uuidv4(),
-    createdAt: Date.now(),
-    description: 'progress: Terminar el curso de Next',
-    status: "in-progress"
-  },
-  {
-    _id: uuidv4(),
-    createdAt: Date.now(),
-    description: 'finished: Terminar el curso de Redux',
-    status: "finished"
-  }]
+  entries: []
 }
 
 // Reducer
