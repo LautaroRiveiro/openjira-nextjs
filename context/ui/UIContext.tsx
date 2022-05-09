@@ -5,6 +5,8 @@ type UIContextType = {
   toggleSideMenu: () => void;
   isAddingEntry: boolean;
   toggleAddingEntry: () => void;
+  isDragging: boolean;
+  setIsDragging: (value: boolean) => void;
 }
 
 const UIContext = createContext<UIContextType | undefined>(undefined)
@@ -13,12 +15,15 @@ const UIContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [isSideMenuOpened, toggleSideMenu] = useReducer<ReducerWithoutAction<boolean>>(state => !state, false)
   const [isAddingEntry, toggleAddingEntry] = useReducer<ReducerWithoutAction<boolean>>(state => !state, false)
+  const [isDragging, setIsDragging] = useState(false)
 
   const value: UIContextType = {
     isSideMenuOpened,
     toggleSideMenu,
     isAddingEntry,
-    toggleAddingEntry
+    toggleAddingEntry,
+    isDragging,
+    setIsDragging
   }
 
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>
