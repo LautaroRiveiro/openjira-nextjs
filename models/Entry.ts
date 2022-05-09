@@ -1,7 +1,7 @@
 import mongoose, { Model, Schema } from "mongoose";
 import { IEntry } from "../interfaces";
 
-interface IEntryModel extends IEntry {
+export interface IEntryModel extends IEntry {
 
 }
 
