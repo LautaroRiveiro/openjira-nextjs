@@ -1,5 +1,4 @@
 import { Reducer, useReducer } from "react"
-import { v4 as uuidv4 } from 'uuid'
 import { IEntry } from "../../interfaces"
 
 // Interfaces y Tipos
@@ -21,7 +20,7 @@ type Action =
 export const addEntry = (description: string) : Action => {
 
   const newEntry : IEntry= {
-    _id: uuidv4(),
+    _id: 'uuidv4()',
     createdAt: Date.now(),
     description,
     status: 'pending'
