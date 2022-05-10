@@ -15,7 +15,13 @@ const create = async (description: string):Promise<IEntry> => {
   return data
 }
 
+const update = async (id: string, entry: Partial<IEntry>):Promise<IEntry> => {
+  const { data } = await entriesAPI.put<IEntry>('/entries/' + id, entry)
+  return data
+}
+
 export const entries = {
   getAll,
-  create
+  create,
+  update
 }

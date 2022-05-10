@@ -28,8 +28,13 @@ const EntriesContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     dispatch(entriesActions.addEntry(newEntry))
   }
 
-  const updateEntryStatus = (id: string, status: EntryStatus) => {
-    dispatch(entriesActions.updateEntry(id, { status }))
+  const updateEntryStatus = async (id: string, status: EntryStatus) => {
+    try {
+      const updatedEntry = await entriesApi.update(id, { status })
+      dispatch(entriesActions.updateEntry(updatedEntry))
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   const value: ContextProps = {

@@ -14,7 +14,7 @@ enum ActionType {
 
 type Action =
 | { type: ActionType.ADD_ENTRY, payload: IEntry }
-| { type: ActionType.UPDATE_ENTRY, payload: {id: string, entry: Partial<IEntry>} }
+| { type: ActionType.UPDATE_ENTRY, payload: IEntry }
 | { type: ActionType.INIT_ENTRIES, payload: IEntry[] }
 
 
@@ -23,8 +23,8 @@ export const addEntry = (newEntry: IEntry) : Action => {
   return {type: ActionType.ADD_ENTRY, payload: newEntry}
 }
 
-export const updateEntry = (id: string, entry: Partial<IEntry>) : Action => {
-  return {type: ActionType.UPDATE_ENTRY, payload: {id, entry}}
+export const updateEntry = (updatedEntry: IEntry) : Action => {
+  return {type: ActionType.UPDATE_ENTRY, payload: updatedEntry}
 }
 
 export const initEntries = (entries: IEntry[]) : Action => {
@@ -47,13 +47,8 @@ const reducer : Reducer<State, Action> = (state, action) => {
    
    case ActionType.UPDATE_ENTRY:
      const entries = state.entries.map(entry => {
-      if (entry._id === action.payload.id) {
-        const updatedEntry: IEntry = {
-          ...entry,
-          ...action.payload.entry,
-          _id: entry._id
-        }
-        return updatedEntry
+      if (entry._id === action.payload._id) {
+        return action.payload
       }
       return entry
      })
