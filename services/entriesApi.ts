@@ -10,6 +10,11 @@ const getAll = async ():Promise<IEntry[]> => {
   return data
 }
 
+const getOne = async (id: string):Promise<IEntry> => {
+  const { data } = await entriesAPI.get<IEntry>('/entries/' + id)
+  return data
+}
+
 const create = async (description: string):Promise<IEntry> => {
   const { data } = await entriesAPI.post<IEntry>('/entries', { description })
   return data

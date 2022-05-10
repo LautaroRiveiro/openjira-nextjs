@@ -16,11 +16,28 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   }
 
   switch (req.method) {
+    case 'GET':
+      return getOneEntry(id as string, res)
     case 'PUT':
       return updateEntry(req, res)
   
     default:
       return res.status(404).end()
+  }
+}
+
+const getOneEntry = async (id: string, res: NextApiResponse<Data>) => {
+  await db.connect()
+  try {
+    const entry = await Entry.findById(id)
+    if (!entry) {
+      return res.status(400).json({message: 'Entry no encontrada'})
+    }
+    return res.status(200).json(entry)
+  } catch (error) {
+    return res.status(500).end()
+  } finally {
+    await db.disconnect()
   }
 }
 
