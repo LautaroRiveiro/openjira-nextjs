@@ -19,15 +19,7 @@ type Action =
 
 
 // Funciones generadoras de acciones
-export const addEntry = (description: string) : Action => {
-
-  const newEntry : IEntry= {
-    _id: 'uuidv4()',
-    createdAt: Date.now(),
-    description,
-    status: 'pending'
-  }
-
+export const addEntry = (newEntry: IEntry) : Action => {
   return {type: ActionType.ADD_ENTRY, payload: newEntry}
 }
 

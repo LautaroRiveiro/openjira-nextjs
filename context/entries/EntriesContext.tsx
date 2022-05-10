@@ -23,8 +23,9 @@ const EntriesContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     getEntries()
   }, [dispatch])
 
-  const addEntry = (description: string) => {
-    dispatch(entriesActions.addEntry(description))
+  const addEntry = async (description: string) => {
+    const newEntry = await entriesApi.create(description)
+    dispatch(entriesActions.addEntry(newEntry))
   }
 
   const updateEntryStatus = (id: string, status: EntryStatus) => {

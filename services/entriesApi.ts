@@ -10,6 +10,12 @@ const getAll = async ():Promise<IEntry[]> => {
   return data
 }
 
+const create = async (description: string):Promise<IEntry> => {
+  const { data } = await entriesAPI.post<IEntry>('/entries', { description })
+  return data
+}
+
 export const entries = {
-  getAll
+  getAll,
+  create
 }
