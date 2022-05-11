@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { DragEvent, FC } from "react"
 import { useUIContext } from "../context/ui"
 import { IEntry } from "../interfaces"
+import { utils } from "../utils"
 
 interface Props {
   entry: IEntry
@@ -45,7 +46,7 @@ export const EntryListItem: FC<Props> = ({ entry }) => {
         <CardActions
           sx={{ display: 'flex', justifyContent: 'end', paddingRight: 2 }}
         >
-          <Typography variant='body2'>hace 30 mins</Typography>
+          <Typography variant='body2'>hace {utils.getDistanceToNow(entry.createdAt)}</Typography>
         </CardActions>
       </CardActionArea>
     </Card>

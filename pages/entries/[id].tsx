@@ -8,6 +8,7 @@ import { useEntriesContext } from '../../context/entries'
 import { servicesDB } from '../../database'
 import { IEntry, EntryStatus } from '../../interfaces'
 import { Layout } from '../../layouts'
+import { utils } from '../../utils'
 
 interface Props {
   entry: IEntry;
@@ -58,7 +59,7 @@ const EntryPage: NextPage<Props> = ({ entry }) => {
           <Card>
             <CardHeader
               title={`Entrada: ${text.substring(0, 20)}${text.length > 20 ? '...' : ''}`}
-              subheader={`Creada hace: 30 minutos`}
+              subheader={`Creada hace: ${utils.getDistanceToNow(entry.createdAt)}`}
             />
             <CardContent>
               <TextField
