@@ -9,6 +9,7 @@ type ContextProps = {
   addEntry: (description: string) => void;
   updateEntryStatus: (id: string, status: EntryStatus) => void;
   updateEntry: (id: string, data: Partial<IEntry>) => void;
+  deleteEntry: (id: string) => void;
 }
 
 const EntriesContext = createContext<ContextProps | undefined>(undefined)
@@ -50,11 +51,22 @@ const EntriesContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     }
   }
 
+  const deleteEntry = async (id: string) => {
+    try {
+      await entriesApi.remove(id)
+      dispatch(entriesActions.deleteEntry(id))
+      enqueueSnackbar('Entrada eliminada', { variant: 'info' })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const value: ContextProps = {
     ...state,
     addEntry,
     updateEntryStatus,
-    updateEntry
+    updateEntry,
+    deleteEntry
   }
 
   return (

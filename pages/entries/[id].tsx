@@ -2,6 +2,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import SaveIcon from '@mui/icons-material/Save'
 import { Button, capitalize, Card, CardActions, CardContent, CardHeader, FormControl, FormControlLabel, FormLabel, Grid, IconButton, Radio, RadioGroup, TextField } from '@mui/material'
 import { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
 import { useEntriesContext } from '../../context/entries'
 import { servicesDB } from '../../database'
@@ -22,7 +23,8 @@ const EntryPage: NextPage<Props> = ({ entry }) => {
   const [status, setStatus] = useState<EntryStatus>(entry.status)
   const [touched, setTouched] = useState(false)
 
-  const { updateEntry } = useEntriesContext()
+  const { updateEntry, deleteEntry } = useEntriesContext()
+  const router = useRouter()
 
   const handleTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     if (!touched) {
@@ -37,6 +39,11 @@ const EntryPage: NextPage<Props> = ({ entry }) => {
 
   const handleSave = () => {
     updateEntry(entry._id, { description: text, status })
+  }
+
+  const handleDelete = async () => {
+    await deleteEntry(entry._id)
+    router.replace('/')
   }
 
   return (
@@ -106,6 +113,7 @@ const EntryPage: NextPage<Props> = ({ entry }) => {
           backgroundColor: 'error.dark',
           color: 'text.primary'
         }}
+        onClick={handleDelete}
       >
         <DeleteIcon />
       </IconButton>

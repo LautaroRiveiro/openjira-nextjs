@@ -16,6 +16,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
       return getOneEntry(id as string, res)
     case 'PUT':
       return updateEntry(req, res)
+    case 'DELETE':
+      return deleteEntry(id as string, res)
   
     default:
       return res.status(404).end()
@@ -63,6 +65,21 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   } catch (error) {
     // TODO: Analizar error
     return res.status(500).json({message: 'error'})
+  } finally {
+    await db.disconnect()
+  }
+}
+
+const deleteEntry = async (id: string, res: NextApiResponse<Data>) => {
+  await db.connect()
+  try {
+    const entry = await Entry.findByIdAndDelete(id)
+    if (!entry) {
+      return res.status(400).json({message: 'Entry no encontrada'})
+    }
+    return res.status(200).json({message: 'Entrada eliminada'})
+  } catch (error) {
+    return res.status(500).end()
   } finally {
     await db.disconnect()
   }

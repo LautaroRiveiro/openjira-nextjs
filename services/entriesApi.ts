@@ -25,8 +25,14 @@ const update = async (id: string, entry: Partial<IEntry>):Promise<IEntry> => {
   return data
 }
 
+const remove = async (id:string):Promise<void> => {
+  await entriesAPI.delete<void>('/entries/' + id)
+  return
+}
+
 export const entries = {
   getAll,
   create,
-  update
+  update,
+  remove
 }
