@@ -6,7 +6,7 @@
 Proyecto basado en curso [Next.js: El framework de React para producción (Fernando Herrera)](https://www.udemy.com/course/nextjs-fh/), secciones 7 a 10.
 
 ## Demo
-
+[https://openjira-nextjs.vercel.app/](https://openjira-nextjs.vercel.app/)
 
 ## Comandos
 Para correr localmente, se necesita la base de datos.
