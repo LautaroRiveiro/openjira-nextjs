@@ -1,5 +1,6 @@
 import MenuIcon from '@mui/icons-material/Menu'
 import { AppBar, IconButton, Toolbar, Typography } from "@mui/material"
+import Link from 'next/link'
 import { useUIContext } from '../context/ui'
 
 export const Navbar = () => {
@@ -19,9 +20,11 @@ export const Navbar = () => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          OpenJira
-        </Typography>
+        <Link href='/' passHref>
+          <Typography variant="h6" sx={{ flexGrow: 1, cursor: 'pointer', display: 'contents' }}>
+            OpenJira
+          </Typography>
+        </Link>
       </Toolbar>
     </AppBar>
   )

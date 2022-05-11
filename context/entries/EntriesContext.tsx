@@ -1,4 +1,5 @@
 import { createContext, FC, PropsWithChildren, useContext, useEffect } from 'react'
+import { useSnackbar } from 'notistack'
 import { EntryStatus, IEntry } from '../../interfaces'
 import { entriesApi } from '../../services'
 import { entriesActions, useEntriesReducer } from './entriesReducer'
@@ -7,6 +8,7 @@ type ContextProps = {
   entries: IEntry[];
   addEntry: (description: string) => void;
   updateEntryStatus: (id: string, status: EntryStatus) => void;
+  updateEntry: (id: string, data: Partial<IEntry>) => void;
 }
 
 const EntriesContext = createContext<ContextProps | undefined>(undefined)
@@ -14,6 +16,7 @@ const EntriesContext = createContext<ContextProps | undefined>(undefined)
 const EntriesContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [state, dispatch] = useEntriesReducer()
+  const { enqueueSnackbar } = useSnackbar()
 
   useEffect(() => {
     const getEntries = async () => {
@@ -37,10 +40,21 @@ const EntriesContextProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
     }
   }
 
+  const updateEntry = async (id: string, data: Partial<IEntry>) => {
+    try {
+      const updatedEntry = await entriesApi.update(id, data)
+      dispatch(entriesActions.updateEntry(updatedEntry))
+      enqueueSnackbar('Entrada actualizada', { variant: 'success' })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   const value: ContextProps = {
     ...state,
     addEntry,
-    updateEntryStatus
+    updateEntryStatus,
+    updateEntry
   }
 
   return (
